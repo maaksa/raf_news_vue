@@ -35,7 +35,10 @@ export default {
   components: {Subject},
   filters: {
     shortText(value) {
-      return value.slice(0, 10)
+      if (value.length < 30) {
+        return value;
+      }
+      return value.slice(0, 30) + '...'
     }
   },
   data() {

@@ -1,10 +1,13 @@
 <template>
   <div>
     <h2>
-      {{ subject.title }}
+      Predmet: {{ subject.title }}
     </h2>
 
-    {{ subject.content }} <br><br>
+    <h5>Opis:</h5>
+    <p>
+      {{ subject.content }} <br><br>
+    </p>
   </div>
 </template>
 
