@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="mt-4">News</h1>
+    <h1 class="mt-4">Tag: {{ this.$route.params.word }}</h1>
 
     <div class="row">
       <div class="col-6">
@@ -13,7 +13,7 @@
               <p>Posted on: {{ new Date(news.createdAt).toISOString().split('T')[0] }}</p>
               <hr class="my-4">
               <p>{{ news.content | shortText }}</p>
-              <b-button variant="primary" href="#" @click="selectedNews = news" v-on:click="scrollToTop">More Info
+              <b-button variant="primary" @click="selectedNews = news" v-on:click="scrollToTop">More Info
               </b-button>
             </b-jumbotron>
           </div>
@@ -26,14 +26,11 @@
 
     </div>
     <br>
-
-    <b-pagination @change="handlePageChange" size="lg" align="center"
+    <b-pagination size="lg" align="center"
                   v-model="currentPage"
                   :per-page="perPage"
+                  aria-controls="my-table"
     ></b-pagination>
-
-    <p class="mt-3">Current Page: {{ currentPage }}</p>
-
   </div>
 </template>
 
@@ -41,6 +38,7 @@
 import SingleNews from "../components/SingleNews";
 
 export default {
+  name: "NewsByCategory",
   components: {SingleNews},
   filters: {
     shortText(value) {
@@ -53,27 +51,21 @@ export default {
   data() {
     return {
       selectedNews: null,
-      newsList: [],
-
-      perPage: 2,
-      currentPage: 1,
+      newsList: []
     }
   },
   methods: {
     scrollToTop() {
       window.scrollTo(0, 0);
-    },
-    handlePageChange(value) {
-      this.currentPage = value;
-    },
+    }
   },
-  updated() {
-    this.$axios.get(`/api/news/page-num/${this.currentPage}`).then((response) => {
+  mounted() {
+    this.$axios.get(`/api/news/category/${this.$route.params.category}`).then((response) => {
       this.newsList = response.data;
     });
   },
-  mounted() {
-    this.$axios.get(`/api/news/page-num/${this.currentPage}`).then((response) => {
+  updated() {
+    this.$axios.get(`/api/news/category/${this.$route.params.category}`).then((response) => {
       this.newsList = response.data;
     });
   },

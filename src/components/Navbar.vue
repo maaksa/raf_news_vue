@@ -19,11 +19,13 @@
                            :class="{active: this.$router.currentRoute.name === 'TopNews'}">Top News
               </router-link>
             </li>
-            <li class="nav-item">
-              <router-link :to="{name: 'Categories'}" tag="a" class="nav-link" :class="{active: this.$router.currentRoute.name === 'Categories'}">
-                Categories
-              </router-link>
-            </li>
+
+            <b-dropdown text="Kategorije" variant="primary" class="e-auto mb-2 mb-lg-0"
+                        style="height: 35px; margin-top: 5px">
+              <b-dropdown-item href="#" v-for="category in categories" :key="category.name"
+                               @click="find(category.name)">{{ category.name }}
+              </b-dropdown-item>
+            </b-dropdown>
           </ul>
           <form v-if="canLogout" class="d-flex" @submit.prevent="logout">
             <button class="btn btn-outline-secondary" type="submit">Logout</button>
@@ -37,6 +39,11 @@
 <script>
 export default {
   name: "Navbar",
+  data() {
+    return {
+      categories: [],
+    }
+  },
   computed: {
     canLogout() {
       return this.$route.name !== 'Login';
@@ -46,8 +53,17 @@ export default {
     logout() {
       localStorage.removeItem('jwt');
       this.$router.push({name: 'Login'});
-    }
-  }
+    },
+    find(category) {
+      this.$router.push(`/news/category/${category}`)
+    },
+  },
+  mounted() {
+    this.$axios.get('/api/category').then((response) => {
+      this.categories = response.data;
+      console.log(response)
+    });
+  },
 }
 </script>
 
