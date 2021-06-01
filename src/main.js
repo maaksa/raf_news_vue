@@ -3,7 +3,7 @@ import './plugins/axios'
 import App from './App.vue'
 import router from './router'
 
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
@@ -16,18 +16,18 @@ Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false
 
-Vue.filter('capitalize', function(value) {
-  if (!value) {
-    return '';
-  }
+Vue.filter('capitalize', function (value) {
+    if (!value) {
+        return '';
+    }
 
-  value = value.toString();
+    value = value.toString();
 
-  return value.charAt(0).toUpperCase() + value.slice(1)
+    return value.charAt(0).toUpperCase() + value.slice(1)
 })
 
 new Vue({
-  router,
-  render: h => h(App)
+    router,
+    render: h => h(App)
 }).$mount('#app')
 

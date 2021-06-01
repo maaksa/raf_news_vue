@@ -5,62 +5,63 @@ import Home from '../views/Home.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/subjects',
-    name: 'Subjects',
-    meta: {
-      authRequired: true,
+    {
+        path: '/',
+        name: 'Home',
+        component: Home
     },
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Subjects.vue')
-  },
-  {
-    path: '/subjects/:id',
-    name: 'single-subject',
-    meta: {
-      authRequired: true,
+    {
+        path: '/news',
+        name: 'News',
+        // meta: {
+        //     //da li je autentifikacija obavezna
+        //     authRequired: true,
+        // },
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ '../views/AllNewNews.vue')
     },
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/SingleSubject.vue')
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
-  }
+    {
+        path: '/subjects/:id',
+        name: 'single-subject',
+        meta: {
+            authRequired: true,
+        },
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ '../views/SingleSubject.vue')
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+    }
 ]
 
 const router = new VueRouter({
-  routes
+    routes
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.authRequired) {
-    const jwt = localStorage.getItem('jwt');
+    if (to.meta.authRequired) {
+        const jwt = localStorage.getItem('jwt');
 
-    if (!jwt) {
-      next({name: 'Login'});
-      return;
+        if (!jwt) {
+            next({name: 'Login'});
+            return;
+        }
+
+        const payload = JSON.parse(atob(jwt.split('.')[1]));
+        const expDate = new Date(payload.exp * 1000);
+        if (expDate < new Date()) {
+            next({name: 'Login'});
+            return;
+        }
     }
 
-    const payload = JSON.parse(atob(jwt.split('.')[1]));
-    const expDate = new Date(payload.exp * 1000);
-    if (expDate < new Date()) {
-      next({name: 'Login'});
-      return;
-    }
-  }
-
-  next();
+    next();
 });
 
 export default router

@@ -10,59 +10,59 @@ import router from "../router";
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 let config = {
-  baseURL: 'http://localhost:8081'
-  // timeout: 60 * 1000, // Timeout
-  // withCredentials: true, // Check cross-site Access-Control
+    baseURL: 'http://localhost:8081'
+    // timeout: 60 * 1000, // Timeout
+    // withCredentials: true, // Check cross-site Access-Control
 };
 
 const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
-  function(config) {
-    const jwt = localStorage.getItem('jwt');
-    config.headers.Authorization = `Bearer ${jwt}`
-    // Do something before request is sent
-    return config;
-  },
-  function(error) {
-    // Do something with request error
-    return Promise.reject(error);
-  }
+    function (config) {
+        const jwt = localStorage.getItem('jwt');
+        config.headers.Authorization = `Bearer ${jwt}`
+        // Do something before request is sent
+        return config;
+    },
+    function (error) {
+        // Do something with request error
+        return Promise.reject(error);
+    }
 );
 
 // Add a response interceptor
 _axios.interceptors.response.use(
-  function(response) {
-    // Do something with response data
-    return response;
-  },
-  function(error) {
-    // Do something with response error
+    function (response) {
+        // Do something with response data
+        return response;
+    },
+    function (error) {
+        // Do something with response error
 
-    if (error && error.response && error.response.status === 401) {
-      router.push({name: 'Login'});
+        if (error && error.response && error.response.status === 401) {
+            router.push({name: 'Login'});
+        }
+
+        return Promise.reject(error);
     }
-
-    return Promise.reject(error);
-  }
 );
 
 // eslint-disable-next-line no-unused-vars
-Plugin.install = function(Vue, options) {
-  Vue.axios = _axios;
-  window.axios = _axios;
-  Object.defineProperties(Vue.prototype, {
-    axios: {
-      get() {
-        return _axios;
-      }
-    },
-    $axios: {
-      get() {
-        return _axios;
-      }
-    },
-  });
+Plugin.install = function (Vue, options) {
+    Vue.axios = _axios;
+    window.axios = _axios;
+    Object.defineProperties(Vue.prototype, {
+        axios: {
+            get() {
+                return _axios;
+            }
+        },
+        $axios: {
+            get() {
+                return _axios;
+            }
+        },
+    });
 };
 
 Vue.use(Plugin)
