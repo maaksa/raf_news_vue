@@ -1,14 +1,16 @@
 <template>
   <div>
-    <subject :subject="subject"></subject>
+    <!--    rijuzujemo komponentu Subject-->
+    <news :subject="subject"></news>
   </div>
 </template>
 
 <script>
-import Subject from "../components/Subject";
+import News from "../components/SingleNews";
+
 export default {
   name: "SingleSubject",
-  components: {Subject},
+  components: {News},
   data() {
     return {
       subject: {},
