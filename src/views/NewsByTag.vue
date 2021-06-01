@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="mt-4">News</h1>
+    <h1 class="mt-4">Tag: {{ this.$route.params.word }}</h1>
 
     <div class="row">
       <div class="col-6">
@@ -13,7 +13,7 @@
               <p>Posted on: {{ new Date(news.createdAt).toISOString().split('T')[0] }}</p>
               <hr class="my-4">
               <p>{{ news.content | shortText }}</p>
-              <b-button variant="primary" href="#" @click="selectedNews = news" v-on:click="scrollToTop">More Info
+              <b-button variant="primary" @click="selectedNews = news" v-on:click="scrollToTop">More Info
               </b-button>
             </b-jumbotron>
           </div>
@@ -39,6 +39,7 @@
 import SingleNews from "../components/SingleNews";
 
 export default {
+  name: "NewsByTag",
   components: {SingleNews},
   filters: {
     shortText(value) {
@@ -60,9 +61,10 @@ export default {
     }
   },
   mounted() {
-    this.$axios.get('/api/news/page-num/1').then((response) => {
+    this.$axios.get(`/api/news/tag/${this.$route.params.word}`).then((response) => {
       this.newsList = response.data;
     });
   },
+
 }
 </script>
