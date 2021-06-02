@@ -14,13 +14,13 @@
                 Home
               </router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" @click="topNews()">
               <router-link :to="{name: 'TopNews'}" tag="a" class="nav-link"
-                           :class="{active: this.$router.currentRoute.name === 'TopNews'}">Top News
+                           :class="{active: this.$router.currentRoute.name === 'TopNews'} ">Top News
               </router-link>
             </li>
 
-            <b-dropdown text="Kategorije" variant="primary" class="e-auto mb-2 mb-lg-0"
+            <b-dropdown text="Categories" variant="primary" class="e-auto mb-2 mb-lg-0"
                         style="height: 35px; margin-top: 5px">
               <b-dropdown-item href="#" v-for="category in categories" :key="category.name"
                                @click="find(category.name)">{{ category.name }}
@@ -56,6 +56,9 @@ export default {
     },
     find(category) {
       this.$router.push(`/news/category/${category}`)
+    },
+    topNews() {
+      this.$router.push(`/top-news`)
     },
   },
   mounted() {

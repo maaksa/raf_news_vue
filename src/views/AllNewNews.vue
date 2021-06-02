@@ -3,7 +3,7 @@
     <h1 class="mt-4">News</h1>
 
     <div class="row">
-      <div class="col-6">
+      <div>
         <div v-for="news in newsList" :key="news.id">
           <br>
           <div>
@@ -13,17 +13,12 @@
               <p>Posted on: {{ new Date(news.createdAt).toISOString().split('T')[0] }}</p>
               <hr class="my-4">
               <p>{{ news.content | shortText }}</p>
-              <b-button variant="primary" href="#" @click="selectedNews = news" v-on:click="scrollToTop">More Info
+              <b-button variant="primary" href="#" @click="findById(news.id)">More Info
               </b-button>
             </b-jumbotron>
           </div>
         </div>
       </div>
-
-      <div class="col-6">
-        <single-news v-if="selectedNews" :single-news="selectedNews"></single-news>
-      </div>
-
     </div>
     <br>
 
@@ -38,10 +33,8 @@
 </template>
 
 <script>
-import SingleNews from "../components/SingleNews";
 
 export default {
-  components: {SingleNews},
   filters: {
     shortText(value) {
       if (value.length < 30) {
@@ -52,7 +45,6 @@ export default {
   },
   data() {
     return {
-      selectedNews: null,
       newsList: [],
 
       perPage: 2,
@@ -60,18 +52,18 @@ export default {
     }
   },
   methods: {
-    scrollToTop() {
-      window.scrollTo(0, 0);
-    },
     handlePageChange(value) {
       this.currentPage = value;
     },
+    findById(id) {
+      this.$router.push(`/news/${id}`)
+    }
   },
-  updated() {
-    this.$axios.get(`/api/news/page-num/${this.currentPage}`).then((response) => {
-      this.newsList = response.data;
-    });
-  },
+  // updated() {
+  //   this.$axios.get(`/api/news/page-num/${this.currentPage}`).then((response) => {
+  //     this.newsList = response.data;
+  //   });
+  // },
   mounted() {
     this.$axios.get(`/api/news/page-num/${this.currentPage}`).then((response) => {
       this.newsList = response.data;

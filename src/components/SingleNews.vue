@@ -6,10 +6,13 @@
 
     <h4 v-if="singleNews.author">Author: {{ singleNews.author.name }}</h4>
 
-    <h6>Tags: <a v-for="tag in newsById.tags" :key="tag.word" @click="getByTag(tag.word)"> {{ tag.word }}
+    <h6>Tags: <a v-for="tag in singleNews.tags" :key="tag.word" @click="getByTag(tag.word)"> {{ tag.word }}
     </a></h6>
 
     <h6>Posted on: {{ new Date(singleNews.createdAt).toISOString().split('T')[0] }}</h6>
+    <hr class="my-4">
+
+    <h6>Number of visits: {{ singleNews.visits_num }}</h6>
     <hr class="my-4">
 
     <h3>Content:</h3>
@@ -39,7 +42,7 @@
 
     <div>
       <b-jumbotron lead="Comments">
-        <p id="single_comment" v-for="comment in newsById.comments" :key="comment.id">
+        <p id="single_comment" v-for="comment in singleNews.comments" :key="comment.id">
           Author: {{ comment.author }}
           <br>
           Posted on: {{ new Date(comment.createdAt).toISOString().split('T')[0] }}
@@ -80,15 +83,12 @@ export default {
       this.$axios.post(`/api/news/${this.singleNews.id}/comments`, {
         author: this.comment.author,
         content: this.comment.content
+      }).then(() => {
+        this.comment.content = ''
+        this.comment.author = ''
+        window.location.reload()
       });
-      this.comment.content = ''
-      this.comment.author = ''
     }
-  },
-  beforeUpdate() {
-    this.$axios.get(`/api/news/${this.singleNews.id}`).then((response) => {
-      this.newsById = response.data;
-    });
   }
 }
 </script>
@@ -97,6 +97,13 @@ export default {
 #div-glavni {
   border: 1px solid black;
   margin-top: 23px;
+  width: 80%;
+  margin-left: 100px;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 
 #single_comment {
@@ -105,3 +112,5 @@ export default {
   padding: 10px;
 }
 </style>
+
+

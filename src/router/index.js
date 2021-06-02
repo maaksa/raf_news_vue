@@ -10,28 +10,25 @@ const routes = [
         name: 'Home',
         component: Home
     },
+    // {
+    //     path: '/news',
+    //     name: 'News',
+    //     // meta: {
+    //     //     //da li je autentifikacija obavezna
+    //     //     authRequired: true,
+    //     // },
+    //     // route level code-splitting
+    //     // this generates a separate chunk (about.[hash].js) for this route
+    //     // which is lazy-loaded when the route is visited.
+    //     component: () => import(/* webpackChunkName: "about" */ '../views/AllNewNews.vue')
+    // },
     {
-        path: '/news',
-        name: 'News',
-        // meta: {
-        //     //da li je autentifikacija obavezna
-        //     authRequired: true,
-        // },
+        path: '/news/:id',
+        name: 'single-news-view',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/AllNewNews.vue')
-    },
-    {
-        path: '/subjects/:id',
-        name: 'single-subject',
-        meta: {
-            authRequired: true,
-        },
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/SingleSubject.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../views/SingleNewsView.vue')
     },
     {
         path: '/news/tag/:word',
@@ -50,6 +47,15 @@ const routes = [
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '../views/NewsByCategory.vue')
+    },
+    {
+        path: '/top-news',
+        name: 'top-news',
+
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ '../views/TopNews.vue')
     },
     {
         path: '/login',
