@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="mt-4">Category: {{ this.$route.params.word }}</h1>
+    <h1 class="mt-4">Category: {{ this.$route.params.category }} </h1>
 
     <div class="row">
       <div class="col-6">
@@ -19,14 +19,9 @@
           </div>
         </div>
       </div>
-
     </div>
     <br>
-    <b-pagination size="lg" align="center"
-                  v-model="currentPage"
-                  :per-page="perPage"
-                  aria-controls="my-table"
-    ></b-pagination>
+
   </div>
 </template>
 
@@ -44,7 +39,7 @@ export default {
   },
   data() {
     return {
-      newsList: []
+      newsList: [],
     }
   },
   methods: {

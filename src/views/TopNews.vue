@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="mt-4">Most Visited News</h1>
+    <h1 align="center" class="mt-4">Most Visited News</h1>
 
     <div class="row">
       <div>
@@ -21,12 +21,13 @@
       </div>
     </div>
     <br>
-
-    <b-pagination size="lg" align="center"
+    <b-pagination @change="handlePageChange" size="lg" align="center"
                   v-model="currentPage"
+                  :total-rows="size-1"
                   :per-page="perPage"
-                  aria-controls="my-table"
     ></b-pagination>
+
+    <p align="center" class="mt-3">Current Page: {{ currentPage }}</p>
 
   </div>
 </template>
@@ -45,10 +46,19 @@ export default {
   },
   data() {
     return {
-      newsList: []
+      newsList: [],
+      size: 0,
+      perPage: 2,
+      currentPage: 1,
     }
   },
   methods: {
+    handlePageChange(value) {
+      this.$axios.get(`/api/news/page-num/${value}`).then((response) => {
+        this.newsList = response.data;
+        this.currentPage = value
+      });
+    },
     findById(id) {
       this.$router.push(`/news/${id}`)
     }
@@ -56,6 +66,7 @@ export default {
   mounted() {
     this.$axios.get("/api/news/top-visited").then((response) => {
       this.newsList = response.data;
+      this.size = this.newsList.length;
     });
   },
 }
@@ -68,8 +79,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
   width: 80%;
   margin-left: 100px;
+  margin-top: 60px;
 }
 </style>

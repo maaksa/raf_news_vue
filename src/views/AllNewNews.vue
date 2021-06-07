@@ -21,9 +21,9 @@
       </div>
     </div>
     <br>
-
     <b-pagination @change="handlePageChange" size="lg" align="center"
                   v-model="currentPage"
+                  :total-rows="size"
                   :per-page="perPage"
     ></b-pagination>
 
@@ -46,27 +46,26 @@ export default {
   data() {
     return {
       newsList: [],
-
+      size: 0,
       perPage: 2,
       currentPage: 1,
     }
   },
   methods: {
     handlePageChange(value) {
-      this.currentPage = value;
+      this.$axios.get(`/api/news/page-num/${value}`).then((response) => {
+        this.newsList = response.data;
+        this.currentPage = value
+      });
     },
     findById(id) {
       this.$router.push(`/news/${id}`)
     }
   },
-  // updated() {
-  //   this.$axios.get(`/api/news/page-num/${this.currentPage}`).then((response) => {
-  //     this.newsList = response.data;
-  //   });
-  // },
   mounted() {
     this.$axios.get(`/api/news/page-num/${this.currentPage}`).then((response) => {
       this.newsList = response.data;
+      this.size = this.newsList.length
     });
   },
 }
