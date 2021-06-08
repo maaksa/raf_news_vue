@@ -66,12 +66,28 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/EditCategory.vue')
     },
     {
+        path: '/user/:email',
+        name: 'edit-user',
+        meta: {
+            authRequired: true,
+        },
+        component: () => import(/* webpackChunkName: "about" */ '../views/EditUser.vue')
+    },
+    {
         path: '/category',
         name: 'new-category',
         meta: {
             authRequired: true,
         },
         component: () => import(/* webpackChunkName: "about" */ '../views/NewCategory.vue')
+    },
+    {
+        path: '/user',
+        name: 'new-user',
+        meta: {
+            authRequired: true,
+        },
+        component: () => import(/* webpackChunkName: "about" */ '../views/NewUser.vue')
     },
     {
         path: '/cms',

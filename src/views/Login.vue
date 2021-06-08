@@ -1,6 +1,5 @@
 <template>
   <div class="pt-5">
-    <h1 v-if="username">Hello, {{ username }} | {{ this.message }}</h1>
     <form @submit.prevent="login">
       <div class="form-group">
         <label for="username">Username</label>
