@@ -58,6 +58,30 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/TopNews.vue')
     },
     {
+        path: '/category',
+        name: 'new-category',
+        meta: {
+            authRequired: true,
+        },
+        component: () => import(/* webpackChunkName: "about" */ '../views/NewCategory.vue')
+    },
+    {
+        path: '/cms',
+        name: 'Cms',
+        meta: {
+            authRequired: true,
+        },
+        component: () => import(/* webpackChunkName: "about" */ '../views/Cms.vue')
+    },
+    {
+        path: '/cms-admin',
+        name: 'CmsAdmin',
+        meta: {
+            authRequired: true,
+        },
+        component: () => import(/* webpackChunkName: "about" */ '../views/CmsAdmin.vue')
+    },
+    {
         path: '/login',
         name: 'Login',
         component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
@@ -79,6 +103,13 @@ router.beforeEach((to, from, next) => {
 
         const payload = JSON.parse(atob(jwt.split('.')[1]));
         const expDate = new Date(payload.exp * 1000);
+
+        // if (payload.role === 0) {
+        //     next({name: 'CmsAdmin'})
+        // } else {
+        //     next({name: 'Cms'})
+        // }
+
         if (expDate < new Date()) {
             next({name: 'Login'});
             return;

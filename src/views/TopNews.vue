@@ -21,9 +21,8 @@
       </div>
     </div>
     <br>
-    <b-pagination @change="handlePageChange" size="lg" align="center"
+    <b-pagination size="lg" align="center"
                   v-model="currentPage"
-                  :total-rows="size-1"
                   :per-page="perPage"
     ></b-pagination>
 

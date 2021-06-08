@@ -26,9 +26,21 @@
                                @click="find(category.name)">{{ category.name }}
               </b-dropdown-item>
             </b-dropdown>
+
+            <li v-if="canLogout" class="nav-item" @click="cms()">
+              <router-link :to="{name: 'Cms'}" tag="a" class="nav-link"
+                           :class="{active: this.$router.currentRoute.name === 'Cms'}">CMS
+              </router-link>
+            </li>
           </ul>
+
           <form v-if="canLogout" class="d-flex" @submit.prevent="logout">
             <button class="btn btn-outline-secondary" type="submit">Logout</button>
+          </form>
+          <form v-if="canLogout" class="d-flex">
+            <router-link :to="{name: 'Login'}" tag="a" class="nav-link"
+                         :class="{active: this.$router.currentRoute.name === 'Login'}">Login
+            </router-link>
           </form>
         </div>
       </div>
@@ -59,6 +71,9 @@ export default {
     },
     topNews() {
       this.$router.push(`/top-news`)
+    },
+    cms() {
+      this.$router.push(`/cms`)
     },
   },
   mounted() {
