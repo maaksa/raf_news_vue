@@ -74,6 +74,14 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/EditUser.vue')
     },
     {
+        path: '/edit-news/:title',
+        name: 'edit-news',
+        meta: {
+            authRequired: true,
+        },
+        component: () => import(/* webpackChunkName: "about" */ '../views/EditNews.vue')
+    },
+    {
         path: '/category',
         name: 'new-category',
         meta: {
@@ -88,6 +96,14 @@ const routes = [
             authRequired: true,
         },
         component: () => import(/* webpackChunkName: "about" */ '../views/NewUser.vue')
+    },
+    {
+        path: '/admin-news',
+        name: 'new-news',
+        meta: {
+            authRequired: true,
+        },
+        component: () => import(/* webpackChunkName: "about" */ '../views/NewNews.vue')
     },
     {
         path: '/cms',

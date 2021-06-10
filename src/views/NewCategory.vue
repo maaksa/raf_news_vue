@@ -71,7 +71,7 @@ export default {
       description: null,
       categories: [],
 
-      perPage: 2,
+      perPage: 4,
       currentPage: 1,
     }
   },

@@ -97,7 +97,7 @@ export default {
       status: null,
       role: null,
 
-      perPage: 2,
+      perPage: 4,
       currentPage: 1,
     }
   },

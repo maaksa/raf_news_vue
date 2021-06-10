@@ -5,6 +5,8 @@
       <router-link to="/category">Add Category</router-link>
       |
       <router-link to="/user">Add User</router-link>
+      |
+      <router-link to="/admin-news">Add News</router-link>
     </div>
     <!--   router-view - ovde ce se ucitavati komponente koje smo definisali u routes u index.js tkd ce se samo ovaj deo menjati kad klicemo na linkove home|about-->
     <router-view/>
